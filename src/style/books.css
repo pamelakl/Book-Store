@@ -1,0 +1,59 @@
+.book-section{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+    padding-top: 15px;
+}
+
+.book{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 25px;
+}
+
+.book-cover{
+    display: flex;
+    height: 200px;
+    
+}
+
+.book-name{
+    position: relative;
+    font-weight: 500;
+    top: -40px;
+}
+
+.book-author{
+    position: relative;
+    font-weight: 300;
+    top: -40px;
+}
+
+.add-liked-book{
+    position: relative;
+    top: -30px;
+    color: white;
+    left: -50px;
+    background-color: black;
+    border-radius: 50%;
+}
+
+.add-book-to-cart{
+    position: relative;
+    top: -60px;
+    color: white;
+    left: -20px;
+    background-color: black;
+    border-radius: 50%;
+}
+
+.remove-liked-book{
+    position: relative;
+    top: -70px;
+    color: white;
+    left: -50px;
+    background-color: black;
+    border-radius: 50%;
+}

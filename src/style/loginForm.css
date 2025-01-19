@@ -1,0 +1,29 @@
+.login-form-container{
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+}
+
+.login-form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-input{
+    display: flex;
+    margin: 5px;
+    border-radius: 10%;
+    border-color: green;
+}
+
+h2{
+    color: rgb(107, 187, 156);
+}
+
+.form-button{
+    margin: 10px;
+    background-color: rgb(107, 187, 156);
+    border-radius: 10%;
+    border: 0
+}

@@ -1,0 +1,5 @@
+body *, html *, body *:before, html *:before, body *:after, html *:after{
+    box-sizing: inherit;
+}
+
+
