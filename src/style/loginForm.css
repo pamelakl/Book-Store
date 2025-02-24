@@ -2,28 +2,78 @@
     display: flex;
     flex-flow: column;
     align-items: center;
+    justify-content: center;
+    width: 500px;
+    height: 400px;
+    position: relative;
+    left: 400px;
+    top: 100px;
 }
 
 .login-form{
     display: flex;
     flex-direction: column;
     align-items: center;
+    
+}
+
+.invalid-message{
+    margin: 0;
+    font-weight: 100;
 }
 
 .form-input{
-    display: flex;
-    margin: 5px;
-    border-radius: 10%;
-    border-color: green;
+    border-radius: 2rem;
+    width: 100%;
+    padding-left: 2rem;
+    border-color: lightgray;
+    height: 30px;
+    direction: ltr;
+    margin:15px;
 }
 
 h2{
-    color: rgb(107, 187, 156);
+    font-weight: 700;
 }
 
 .form-button{
     margin: 10px;
+    border-radius: 2rem;
+    border-color: lightgray;
+    height: 20px;
+    cursor: pointer;
+}
+
+.settings-form-button{
+    border-radius: 2rem;
+    border-color: lightgray;
+    height: 20px;
+    cursor: pointer;
+    width: 120px;
+}
+
+.submit-form-button{
+    margin: 10px;
     background-color: rgb(107, 187, 156);
-    border-radius: 10%;
-    border: 0
+    border-radius: 2rem;
+    border-color: lightgray;
+    height: 20px;
+    cursor: pointer;
+}
+
+.change-settings-container{
+    display: flex;
+    flex-direction: column;
+}
+
+.change-email-form{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.change-password-form{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }

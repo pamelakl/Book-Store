@@ -8,6 +8,7 @@ img{
     padding-left: 4.5rem;
     border-color: lightgray;
     height: 30px;
+    direction: rtl;
   }
   
 .submit-search{
@@ -19,6 +20,7 @@ img{
     transition: 250ms;
     overflow: hidden;
     color: #0e0e0e;
+    cursor: pointer;
   }
 
 .header-search-input-wrapper{
@@ -32,6 +34,7 @@ img{
 
 .search-button-wrapper{
     position: absolute;
+    cursor: pointer;
 }
 
 .info_bar{

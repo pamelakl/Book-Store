@@ -4,16 +4,22 @@ import { LoginContext } from '../context/LoginContext';
 import { CiHeart } from "react-icons/ci";
 import '../style/books.css'
 import { addLikedBookAction } from '../actions/booksActions';
-
+import { useState } from 'react';
+import { userDataInitialState } from '../reducers/loginReducer';
+ 
 
 const AddLikedBook = ({bookID, title, author, price, cover}) =>{
     const { dispatchBooksData } = useContext(BooksContext);
-    const { userData } = useContext(LoginContext);
+   // const { userData } = useContext(LoginContext);
+    const [userData, setUserData] = useState(() => {
+           const storedUserData = localStorage.getItem('userData');
+           return storedUserData ? JSON.parse(storedUserData) : userDataInitialState;
+       });
 
     const user = userData.user;
 
-    const addLikedBook = () => {
-        console.log("before:")
+    const addLikedBook = (event) => {
+        event.stopPropagation();
         !!userData.user?
             dispatchBooksData(addLikedBookAction({
                 bookID,

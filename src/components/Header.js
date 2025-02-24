@@ -1,19 +1,27 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { CiUser, CiHeart, CiShoppingCart } from "react-icons/ci";
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import SearchBar from './searchBar';
 import { Link, useNavigate } from 'react-router-dom';
 import { LoginContext } from '../context/LoginContext';
 import { logoutAction } from '../actions/loginActions';
 import { CiLogout } from "react-icons/ci";
+import { IoIosSettings } from "react-icons/io";
+import { MdAdminPanelSettings } from "react-icons/md";
+import { userDataInitialState } from '../reducers/loginReducer';
+
 
 function Header(){
-    const {userData, dispatchUserData} = useContext(LoginContext);
-    const history = useNavigate();
+    const {dispatchUserData} = useContext(LoginContext);
+     const [userData, setUserData] = useState(() => {
+            const storedUserData = localStorage.getItem('userData');
+            return storedUserData ? JSON.parse(storedUserData) : userDataInitialState;
+        });
+    const navigate = useNavigate();
 
     const onClickLogout = () => {
         dispatchUserData(logoutAction());
-        history.push("/");
+        navigate("/");
     }
 
     return (
@@ -21,9 +29,9 @@ function Header(){
           <div className='icons'> 
             <div className="page_header_costumer">
                 {
-                    !!userData.user?
-                    <div onClick={()=> onClickLogout}>
-                        <CiLogout size={23}/>
+                    !!JSON.parse(localStorage.getItem('userData')).user?
+                    <div>
+                        <CiLogout size={23} onClick={()=>onClickLogout()}/>
                     </div> : 
                     <Link to={'/connect'} >
                         <CiUser className='costumer-icon' size={23}/>
@@ -40,6 +48,24 @@ function Header(){
                     <CiShoppingCart className='minicart-icon' size={23}/>
                 </Link>
             </div>
+            <div className='page_header_settings'>
+            {
+                !!JSON.parse(localStorage.getItem('userData')).user?
+                <div>
+                    <Link to={'/Settings'}>
+                        <IoIosSettings size={23} className='settings-icons'/>
+                    </Link>
+                </div>:
+                <div></div>
+            }
+            </div>
+            <div className='page_header_admin'>
+                <Link to={'/AdminLogin'}>
+                    <MdAdminPanelSettings className='admin-icon' size={23}/>
+                </Link>
+                
+            </div>
+            
           </div>
           <SearchBar ></SearchBar>
           <Link to={'/'}>

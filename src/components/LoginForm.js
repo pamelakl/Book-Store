@@ -90,7 +90,7 @@ const LoginForm = (props) => {
 		    <input type="password" placeholder="Password" onBlur={ onBlurPasswordInput } className='form-input'/>
 		    { !isPasswordInputValid && <div className="invalid-message">You must enter your password.</div> }
             <div className="login-form__nav">
-			<button type="submit"  disabled={ isFormInavlid() } className='form-button'>Submit</button>
+			<button type="submit"  disabled={ isFormInavlid() } className='submit-form-button'>Submit</button>
 		</div>
          
         </form>
