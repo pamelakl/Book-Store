@@ -1,0 +1,180 @@
+.book-section{
+    display: flex;
+    flex-direction: column;
+    background-color: #e0bea4;
+    min-height: 600px;
+}
+
+.books{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+    padding-top: 85px;
+
+}
+
+.book{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 25px;
+    margin-bottom: 0px;
+    cursor: pointer;
+}
+
+.book-cover{
+    display: flex;
+    height: auto;
+    max-width: 140px;
+    max-height: 195px;
+    border-radius: 8px;
+}
+
+.book-name{
+    position: relative;
+    font-weight: 500;
+}
+
+.liked-book-name{
+    position: relative;
+    font-weight: 500;
+}
+
+.book-author {
+    position: relative;
+    font-weight: 300;
+}
+
+.book-price{
+    position: relative;
+    font-weight: 300;
+}
+
+.liked-book-author {
+    position: relative;
+    font-weight: 300;
+}
+
+.liked-book-price{
+    position: relative;
+    font-weight: 300;
+}
+
+.add-liked-book{
+    position: relative;
+    top: -30px;
+    color: white;
+    left: -50px;
+    background-color: black;
+    border-radius: 50%;
+}
+
+.add-book-to-cart{
+    position: relative;
+    color: white;
+    background-color: black;
+    border-radius: 25%;
+}
+
+.remove-liked-book{
+    position: relative;
+    top: -100px;
+    color: white;
+    left: -50px;
+    background-color: black;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.book-div{
+    display: flex;
+    flex-flow: row;
+    padding: 50px;
+    background-color: #e0bea4;
+    min-height: 600px;
+}
+
+.book-info{
+    display: flex;
+    flex-flow: column;
+    align-items: flex-start;
+    margin-right: 40px;
+}
+
+.book-info-name{
+   
+    font-weight: 500;
+}
+
+.book-info-author{
+   
+    font-weight: 300;
+}
+
+.book-info-desc{
+    font-weight: 200;
+}
+
+.book-info-cover{
+    display: flex;
+    height: auto;
+    max-width: 300px;
+    max-height: 270px;
+}
+
+.pageNumbers{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+    
+}
+
+.page-button{
+    margin: 7px;
+    border-radius: 50%;
+    color: white;
+    background-color: black;
+    cursor: pointer;
+}
+
+.total{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.change-settings-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.change-book-settings{
+    position: relative;
+    top: -30px;
+}
+
+.change-book-settings-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.change-book-form{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.books-form-input{
+    display: flex;
+    margin: 5px;
+    border-radius: 10%;
+}
+
+.books-form-buttom{
+    border: 0;
+    cursor: pointer;
+}
