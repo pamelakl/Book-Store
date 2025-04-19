@@ -7,7 +7,7 @@ const auth = async (req, res, next) => {
     try{
         const token = req.headers.token;
         const payload = jwt.verify(token, config.get('jwtPrivateKey'));
-        
+        req.userId = payload.id;
         next();
     } catch(err){
         console.log(err);

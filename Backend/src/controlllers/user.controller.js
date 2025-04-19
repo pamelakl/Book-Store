@@ -45,7 +45,7 @@ const logout = async(req, res, next) => {
 const getBooksInCart = async(req, res, next) => {
     try{
         console.log("getting books")
-        const userId = req.params.id;
+        const userId = req.userId;
         const books = await apiService.getBooksInCart(userId);
         ok(res, books, "Got list of books on cart");
     } catch(err){
@@ -55,7 +55,7 @@ const getBooksInCart = async(req, res, next) => {
 
 const addBookToCart = async(req, res, next) => {
     try{
-        const userId = req.params.id;
+        const userId = req.userId;
         const bookData = req.body;
         console.log(bookData);
         
@@ -69,7 +69,7 @@ const addBookToCart = async(req, res, next) => {
 
 const changeAccountInfo = async(req, res, next) => {
     try{
-        const userId = req.params.id;
+        const userId = req.userId;
         console.log(userId);
         const newData = req.body;
         const user = await apiService.changeAccountInfo(userId, newData);
@@ -83,7 +83,7 @@ const changeAccountInfo = async(req, res, next) => {
 const deleteBookFromCart = async(req, res, next) => {
     try{
 
-        const userId = req.params.id;
+        const userId = req.userId;
         const bookId = req.body.bookId;
 
         await apiService.deleteBookFromCart(userId, bookId);
@@ -96,7 +96,7 @@ const deleteBookFromCart = async(req, res, next) => {
 
 const deleteAccount = async(req, res, next) => {
     try{
-        const userId = req.params.id;
+        const userId = req.userId;
 
         await apiService.deleteAccount(userId);
 

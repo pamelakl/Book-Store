@@ -149,12 +149,12 @@ const login = async (userData) => {
     if(match){ 
         const token = jwt.sign({id: user._id}, config.get('jwtPrivateKey'));
         const retUser = {
-            _id: userData._id,
+            _id: user._id,
             admin: user.admin
         }
         return {user: retUser, token};
     }
-    throw new Error("Email or password is wrong");
+    throw new NotExistError("Email or password is wrong");
 }
 
 const deleteAccount = async (userId)=> {

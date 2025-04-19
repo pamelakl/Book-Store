@@ -15,14 +15,14 @@ userRouter.post('/users/signup', validate(loginRequestSchema) ,userController.cr
 
 userRouter.post('/users/logout', auth, userController.logout);
 
-userRouter.get('/users/:id', auth, userController.getBooksInCart)
+userRouter.get('/users', auth, userController.getBooksInCart)
 
-userRouter.post('/users/:id', auth,  userController.addBookToCart);
+userRouter.post('/users', auth,  userController.addBookToCart);
 
-userRouter.post('/users/updateInfo/:id', auth, userController.changeAccountInfo)
+userRouter.post('/users/updateInfo', auth, userController.changeAccountInfo)
 
-userRouter.delete('/users/:id', auth, userController.deleteBookFromCart); 
+userRouter.delete('/users', auth, userController.deleteBookFromCart); 
 
-userRouter.delete('/users/accounts/:id', auth, userController.deleteAccount);
+userRouter.delete('/users/accounts', auth, userController.deleteAccount);
 
 module.exports = userRouter;
