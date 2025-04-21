@@ -5,7 +5,6 @@ const config = require('config');
 
 const errorHandler = require('./middlewares/error-handler.middleware')
 
-//const apiRouter = require('./routers/api.routers')
 const userRouter = require('./routers/user.routers');
 const booksRouter = require('./routers/books.routers');
 
@@ -33,7 +32,6 @@ app.use(helmet())
 
 app.get('/', async (_, res) => res.send('Node.js server'));
 
-//app.use('/', apiRouter)
 app.use('/', userRouter)
 app.use('/', booksRouter);
 

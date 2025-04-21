@@ -52,12 +52,9 @@ const AdminLogin = (props) => {
 
     const onSubmitform = async (event) => {
         event.preventDefault();
-        console.log("login form:", email, password);
         try{
             const userData = await loginToSite(email, password);
-            console.log(userData);
             if(userData?.user?.admin){
-                console.log("loging");
                 dispatchUserData(loginAction(userData));
                 navigate("/AdminSettings");
             }

@@ -58,7 +58,7 @@ function Books(){
                 <div className='books'>
                     {currentBooks.map((book,i)=>(
                         <div className='book' >
-                            <img src={book.cover} className='book-cover' onClick={()=>navigate(`/Books/${book.id}`)}></img>
+                            <img src={book.cover} className='book-cover' onClick={()=>navigate(`/Books/${book._id}`)}></img>
                             <div className='book-name'>{`${book.title}` }</div>
                             <div className='book-author'>{`${book.author}`}</div>
                             <div className='book-price'>{`${book.price}`}</div>

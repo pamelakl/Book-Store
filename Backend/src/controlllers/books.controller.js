@@ -53,10 +53,51 @@ const changeBookInfo = async (req, res, next) => {
     }
 }
 
+const getBooksInCart = async(req, res, next) => {
+    try{
+        const userId = req.userId;
+        const books = await apiService.getBooksInCart(userId);
+        ok(res, books, "Got list of books on cart");
+    } catch(err){
+        next(err);
+    }
+}
+
+const addBookToCart = async(req, res, next) => {
+    try{
+        const userId = req.userId;
+        const bookData = req.body;
+        
+        await apiService.addBookToUser(userId, bookData);
+        console.log("Successfully added book to cart", bookData)
+        ok(res, bookData, "Book successfully assigned to user");
+
+    } catch (error) {
+      next(error)
+    }
+}
+
+const deleteBookFromCart = async(req, res, next) => {
+    try{
+
+        const userId = req.userId;
+        const bookId = req.body.bookId;
+
+        await apiService.deleteBookFromCart(userId, bookId);
+
+        ok(res, bookId, "Deleted book successfully");
+    } catch(error) {
+        next(error)
+    }
+}
+
 module.exports = {
     getBook,
     getBooks,
     addBook,
     deleteBook,
-    changeBookInfo
+    changeBookInfo,
+    addBookToCart,
+    getBooksInCart,
+    deleteBookFromCart,
 }

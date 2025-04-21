@@ -36,7 +36,7 @@ function App() {
                 <Route path='/Books/:bookId' element={<BookInfo></BookInfo>}></Route>
                 <Route path='/AdminLogin' element={<AdminLogin></AdminLogin>}></Route>
                 <Route path='/AdminSettings' element={<AdminSettings></AdminSettings>}></Route>
-                <Route path="*" element={<NotFound />} /> {/* Catch-all route */}
+                <Route path="*" element={<NotFound />} /> 
               </Routes>
             </Layout>
           </BooksContextProvider>

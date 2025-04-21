@@ -28,7 +28,6 @@ const login = async(req, res, next) => {
             notFound(res, "User not found");
         }
     }catch(err){
-        console.log("got to err")
         next(err);
     }
 }
@@ -42,55 +41,15 @@ const logout = async(req, res, next) => {
     }
 }
 
-const getBooksInCart = async(req, res, next) => {
-    try{
-        console.log("getting books")
-        const userId = req.userId;
-        const books = await apiService.getBooksInCart(userId);
-        ok(res, books, "Got list of books on cart");
-    } catch(err){
-        next(err);
-    }
-}
-
-const addBookToCart = async(req, res, next) => {
-    try{
-        const userId = req.userId;
-        const bookData = req.body;
-        console.log(bookData);
-        
-        await apiService.addBookToUser(userId, bookData);
-        ok(res, bookData, "Book successfully assigned to user");
-
-    } catch (error) {
-      next(error)
-    }
-}
-
 const changeAccountInfo = async(req, res, next) => {
     try{
         const userId = req.userId;
-        console.log(userId);
         const newData = req.body;
         const user = await apiService.changeAccountInfo(userId, newData);
 
         ok(res, {user}, "Info was changed");
     } catch(error){
         next(error);
-    }
-}
-
-const deleteBookFromCart = async(req, res, next) => {
-    try{
-
-        const userId = req.userId;
-        const bookId = req.body.bookId;
-
-        await apiService.deleteBookFromCart(userId, bookId);
-
-        ok(res, bookId, "Deleted book successfully");
-    } catch(error) {
-        next(error)
     }
 }
 
@@ -111,9 +70,6 @@ module.exports = {
     createUser,
     login,
     logout,
-    addBookToCart,
-    getBooksInCart,
-    deleteBookFromCart,
     changeAccountInfo,
     deleteAccount
 }

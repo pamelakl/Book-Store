@@ -15,13 +15,7 @@ userRouter.post('/users/signup', validate(loginRequestSchema) ,userController.cr
 
 userRouter.post('/users/logout', auth, userController.logout);
 
-userRouter.get('/users', auth, userController.getBooksInCart)
-
-userRouter.post('/users', auth,  userController.addBookToCart);
-
 userRouter.post('/users/updateInfo', auth, userController.changeAccountInfo)
-
-userRouter.delete('/users', auth, userController.deleteBookFromCart); 
 
 userRouter.delete('/users/accounts', auth, userController.deleteAccount);
 

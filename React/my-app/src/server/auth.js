@@ -20,7 +20,6 @@ export const subscribeToSite = async (email, password) => {
             throw new Error(data.error || 'Signup failed');
         }
 
-        console.log('Signup success:', data);
         return data.data.user;
         
     } catch (err) {
@@ -31,8 +30,6 @@ export const subscribeToSite = async (email, password) => {
 
 
 export const loginToSite = async (email, password) => {
-    console.log("login to site")
-    console.dir(process?.env)
     try {
         const response = await fetch("http://localhost:3000/users/login", {
             method: 'POST',
@@ -51,8 +48,6 @@ export const loginToSite = async (email, password) => {
         if (!response.ok) {
             throw new Error(data.error || 'Login failed');
         }
-
-        console.log('Login success:', data);
         return data.data.user;
         
     } catch (err) {
@@ -64,7 +59,6 @@ export const loginToSite = async (email, password) => {
 export const changeInfo = async (id, fieldName, fieldValue, token) => {
     console.dir(process?.env)
     try {
-        //console.log(id + " " + email + " " + password )
         const response = await fetch(`http://localhost:3000/users/updateInfo`, {
             method: 'POST',
             headers: {
@@ -82,7 +76,6 @@ export const changeInfo = async (id, fieldName, fieldValue, token) => {
             throw new Error(data.error || 'Changing Email failed');
         }
 
-        console.log('Email success:', data);
         return data.data.user;
         
     } catch (err) {
@@ -107,9 +100,6 @@ export const deleteAccount = async (id, token) => {
         if (!response.ok) {
             throw new Error(data.error || 'Deletion failed');
         }
-
-        console.log('delet successeeded');
-        //return data.data.user;
         
     } catch (err) {
         console.error("Error Subscribing:", err.message);

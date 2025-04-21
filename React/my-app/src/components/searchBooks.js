@@ -8,16 +8,13 @@ import { BooksContext } from '../context/BooksContext';
 import { useNavigate } from 'react-router-dom';
 
 const SearchBooks = (props) => {
-    console.log("searching:...")
     const {search} = useParams()
-    console.log(search)
 
     const [books, setBooks] = useState([]);
     
     useEffect(()=>{
         const fetchBooks = async () => {
             try{
-                console.log("FETCHING BOOKS FOR SEARCH TERM:", search);
                 const response = await fetch("http://localhost:3000/books");
                 const data = await response.json();
                 setBooks((data.data.books).filter((book) => (book.title.toLowerCase()).includes(search?.toLowerCase())));

@@ -46,14 +46,14 @@
 }
 
 .shopping-cart-icon {
-  width: 32px;       /* Adjust size */
-  height: 32px;      /* Adjust size */
-  color: #333;       /* Set the color */
-  cursor: pointer;   /* Add pointer cursor */
+  width: 32px;       
+  height: 32px;     
+  color: #333;     
+  cursor: pointer;  
 }
 
 .shopping-cart-icon:hover {
-  color: #007bff;    /* Change color on hover */
+  color: #007bff; 
 }
 
 .icons{

@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
+const { AlreadyExistsError, BadRequestError } = require('../utils/error.utils');
 
 const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*\W).{8,}$/;
 
@@ -20,7 +21,7 @@ const userSchema = new mongoose.Schema({
         unique: true,
         validate(value){
             if(!validator.isEmail(value))
-                throw new Error("Email is not valid")
+                throw new BadRequestError("Email is not valid")
         }
     },
     admin: {

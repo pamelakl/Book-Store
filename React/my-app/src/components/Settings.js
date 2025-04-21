@@ -66,16 +66,12 @@ const Settings = (props) => {
 
     const onSubmitEmail = (event) => {
         event.preventDefault();
-        console.log(userData)
         changeInfo(userData.user._id, 'email', email, userData.token).then(
             (userData) => {
-                console.log("changing email");
-                console.log(userData);
                 dispatchUserData(loginAction(userData));
                 alert("Email changed");
             },
             (err) => {
-                console.log("error");
                 setErrorMessage(err.message);
             }
         )
@@ -86,13 +82,11 @@ const Settings = (props) => {
         event.preventDefault();
         changeInfo(userData.user._id, 'password', password, userData.token).then(
             (userData) => {
-                console.log("changing password");
                 const token = userData.token;
                 dispatchUserData(loginAction({token, userData}));
                 alert("Password changed");
             },
             (err) => {
-                console.log("error");
                 setErrorMessage(err.message);
             }
         )
@@ -106,7 +100,6 @@ const Settings = (props) => {
                 navigate('/');
             },
             (err)=>{
-                console.log("error");
                 setErrorMessage(err.message);
             }
         )

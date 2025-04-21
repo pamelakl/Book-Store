@@ -16,27 +16,20 @@ const booksReducer = (booksData, action) =>{
     switch(action.type){
         case "ADD_LIKED_BOOK":
            const existingLikedBooks = JSON.parse(localStorage.getItem('likedBooks')) || [];
-          // console.log(existingLikedBooks.some((b) => b.bookID === action.Book.bookID && b.bookID === action.Book.bookID))
             const updatedLikedBooks = existingLikedBooks.some((b) => b.bookID === action.Book.bookID && b.user.id === action.Book.user.id)
-        //    book.bookID === action.Book.book.bookID && book.user.id === action.Book.user.id
             ? existingLikedBooks
                 : [...existingLikedBooks, action.Book];
             localStorage.setItem('likedBooks', JSON.stringify(updatedLikedBooks));
-            console.log('addedToCart:', (JSON.parse(localStorage.getItem('addedToCart'))));
             return {
                 ...booksData,
                 likedBooks: [...booksData.likedBooks, action.Book]
             };
         case "ADD_BOOK_TO_CART":
-            console.log('likedBooks:', (JSON.parse(localStorage.getItem('likedBooks'))));
-            console.log('addedToCart:', (JSON.parse(localStorage.getItem('addedToCart'))));
             const existingBooksInCart = JSON.parse(localStorage.getItem('addedToCart')) || [];
-           console.log(existingBooksInCart.some((b) => b.bookID === action.Book.bookID))
             const updatedBooksInCart = existingBooksInCart.some((b) => b.bookID === action.Book.bookID && b.user.id === action.Book.user.id)
             ? existingBooksInCart
                 : [...existingBooksInCart, action.Book];
             localStorage.setItem('addedToCart', JSON.stringify(updatedBooksInCart));
-            console.log('addedToCart:', (JSON.parse(localStorage.getItem('addedToCart'))));
             return {
                 ...booksData,
                 addedToCart: [...booksData.addedToCart, action.Book]
@@ -109,7 +102,6 @@ const booksReducer = (booksData, action) =>{
                 addedToCart: allBooksInCartChanged_r
             };
         case "ADD_BOOK":
-            console.log("recieved new book event")
             const allBooks_n = JSON.parse(localStorage.getItem('allBooks')) || [];
             const newBook = { id: action.Book.nextId, title: action.Book.title, author: action.Book.author, price: action.Book.price, cover: "/general_book.jpg" }
             const updatedBooks = [...allBooks_n, newBook]

@@ -39,7 +39,6 @@ const ChangeBookSettings = ({ bookID, title, author, price, cover, onBookUpdate 
             });
 
             const data = await response.json();
-            console.log(`Updated ${fieldName}:`, data);
 
             switch (fieldName) {
                 case 'title':

@@ -10,7 +10,6 @@ import { userDataInitialState } from '../reducers/loginReducer';
 
 function Cart(){
      const [userData, setUserData] = useState(() => {
-            console.log("got here" + localStorage.getItem('userData'))
             const storedUserData = localStorage.getItem('userData');
             return storedUserData ? JSON.parse(storedUserData) : userDataInitialState;
         });
@@ -29,7 +28,7 @@ function Cart(){
 
     async function fetchBooks(){
         try{
-            const response = await fetch(`http://localhost:3000/users`,{
+            const response = await fetch(`http://localhost:3000/books/cart`,{
                 headers: {
                     'Content-Type': 'application/json',
                     'token': userData.token
@@ -37,8 +36,6 @@ function Cart(){
             }) 
             const data = await response.json();
             const booksInCart = data.data;
-            console.log("booksInCart:", booksInCart);
-            booksInCart.forEach(book => console.log("Book type:", typeof book, book));
             setBooksInCart(data.data);
             const totalToPay = booksInCart.reduce((acc, book) => {
                 return acc + Number(book.price)
@@ -53,7 +50,7 @@ function Cart(){
 
     const removeBook = async (book) => {
         try{
-            const response = await fetch(`http://localhost:3000/users`, {
+            const response = await fetch(`http://localhost:3000/books/cart`, {
                 method: 'DELETE',
                 headers: {
                     'token': userData.token,

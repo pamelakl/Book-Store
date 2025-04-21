@@ -1,3 +1,4 @@
+const { BadRequestError } = require('../utils/error.utils');
 const {badRequest} = require('../utils/response.utils')
 
 const validate = (schema) => async (req, res, next) => { 
@@ -10,7 +11,7 @@ const validate = (schema) => async (req, res, next) => {
 
         next();
     } catch(err){
-        console.log(err);
+        next(err);
     }
 };
 

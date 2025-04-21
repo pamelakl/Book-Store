@@ -86,7 +86,6 @@ const AddNewBook = ({ onAdd }) => {
             const data = await response.json();
             setNextId(nextId+1);
             onAdd();
-            console.log("added new book")
         }
         catch(error){
             console.error('Error:', error);

@@ -51,6 +51,7 @@ const LoginForm = (props) => {
             let userData;
             if (action === 'LogIn') {
                 userData = await loginToSite(email, password);
+                
             } else {
                 userData = await subscribeToSite(email, password);
             }

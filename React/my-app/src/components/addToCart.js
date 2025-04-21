@@ -13,10 +13,9 @@ const AddToCart = ({bookID, title, author, price, cover}) =>{
 
     const onSubmit =  async (event) => {
         event.stopPropagation();
-        console.log(userData);
         if(!!userData?.user){
             try{
-                const response = await fetch(`http://localhost:3000/users`, {
+                const response = await fetch(`http://localhost:3000/books/cart`, {
                     method: 'POST',
                     headers: {
                     'Content-Type': 'application/json',

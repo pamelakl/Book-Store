@@ -12,28 +12,23 @@ const getUsers = () => {
 
 const getUser = async (id) => {
     const user = await User.findById(id);
-    console.log(user);
     return user;
 }
 
 const getBooks = async () => {
     const books = await Book.find();
-   // console.log(heroes)
     return books;
 }
 
 const getBooksInCart = async (userId) => {
     const user = await User.findById(userId).populate('books');
-    console.log("the user:" + user);
     const books = user.books;
-    console.log("his books:" + books);
 
     return books;
 }
 
 const changeAccountInfo = async (userId, newData) => {
     const user = await User.findById(userId);
-    console.log("new data:"+ JSON.stringify(newData, null, 2));
     if(newData.password){
         const salt = await bcrypt.genSalt(10);
         user.password = await bcrypt.hash(newData.password, salt);
@@ -51,14 +46,11 @@ const changeAccountInfo = async (userId, newData) => {
 }
 
 const changeBookInfo = async (bookId, newBookInfo) => {
-    console.log(bookId)
-    console.log("new info:", newBookInfo)
     const updatedBook = await Book.findByIdAndUpdate(
         bookId,
         { $set: newBookInfo },
         { new: true, runValidators: true }
     );
-    console.log("updatedBook", updatedBook);
 
     if (!updatedBook) {
         const error = new Error("Book not found");
@@ -82,12 +74,9 @@ const addBookToUser = async (userId, bookData) => {
 const deleteBookFromCart = async (userId, bookId) => {
     const user = await getUser(userId);
     const book = await getBook(bookId);
-    console.log("user", user);
-    console.log("book", book)
     if(!user || !book){
         throw new NotExistError("info not found");
     }
-  //  const bookObjectId = new mongoose.Types.ObjectId(bookId.toString());
     
     user.books = user.books.filter(b => !b.equals(bookId));
 
@@ -111,6 +100,7 @@ const addNewBook = async (bookId, title, author, price, cover, description) => {
     });
 
     await newBook.save();
+    console.log("Succesfully added new book to cart", newBook )
     return newBook;
 }
 
@@ -143,7 +133,6 @@ const createUser = async (userData) => {
 
 const login = async (userData) => {
     const user = await User.findOne({ email: userData.email });
-    console.log("found user:", user);
     if(!user) throw new NotExistError("Email or password is wrong")
     const match = await bcrypt.compare(userData.password, user.password); 
     if(match){ 

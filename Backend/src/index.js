@@ -11,7 +11,6 @@ const {connectToMongoDB, disconnectFromMongoDB, initDB} = require('./databases/m
 
 const signals = ['SIGINT', 'SIGTERM', 'SIGHUP'];
 const gracefulShutdown = (signal, server) => {
-    //Logic for the shutdown of the server
     process.on(signal, async () => {
         server.close();
         await disconnectFromMongoDB();

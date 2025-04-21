@@ -1,13 +1,10 @@
-export const userDataInitialState = {user: null, token:""}; //, admin:false};
+export const userDataInitialState = {user: null, token:""}; 
 
 const loginReducer = (userData, action) =>{
     switch(action.type){
         case "LOGIN":
-            console.log("logging at the reducer" + action)
-            const newUser = {user: { ...action.user}, token:action.token} //, admin:action.user.admin}
-            console.log("logging" + newUser);
+            const newUser = {user: { ...action.user}, token:action.token} 
             localStorage.setItem('userData', JSON.stringify(newUser));
-          //  return {user: { ...action.user}, token:action.token, admin:action.user.admin};
 
             return newUser;
         case "LOGOUT":

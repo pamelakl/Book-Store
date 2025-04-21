@@ -10,7 +10,6 @@ const auth = async (req, res, next) => {
         req.userId = payload.id;
         next();
     } catch(err){
-        console.log(err);
         next(err);
     }
 };
