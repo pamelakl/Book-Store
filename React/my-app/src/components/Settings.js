@@ -106,7 +106,7 @@ const Settings = (props) => {
     }
 
     return (
-      <div className="change-settings-container">
+      <div className="login-form-container">
         <h1>Change Account Settings</h1>
         {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
         <form onSubmit={onSubmitEmail} className='change-email-form'>

@@ -1,16 +1,12 @@
 import '../style/books.css';
-import React, { useContext, useEffect } from 'react';
+import React, {  useEffect } from 'react';
 import { useState } from 'react';
 import '../style/books.css'
-import { BooksContext } from '../context/BooksContext';
 import AddToCart from './addToCart';
 import { useNavigate } from 'react-router-dom';
-import { booksDataInitialState } from '../reducers/booksReducer';
 
 
 function Books(){
-
-    const {booksData} = useContext(BooksContext)
 
     const [books, setBooks] = useState([]);
 
@@ -26,26 +22,18 @@ function Books(){
             }
         }
         fetchBooks();
-        
-        // fetch("http://localhost:3000/books") 
-        //   .then(response => response.json())
-        //   .then(data => 
-        //     {   
-        //         setBooks(data.data.books);
-        //     })
-        //   .catch(error => console.error("Error fetching books:", error));
     },[])
 
     const[pageNumber, setPageNumber] = useState(1);
 
-    const totalPages = books.length%5 === 0 ? books.length/5 : (books.length/5)+1
+    const totalPages = books.length%12 === 0 ? books.length/12 : (books.length/12)+1
 
     const navigate = useNavigate();
 
-    const[currentBooks, setCurrentBooks] = useState(books.slice((pageNumber - 1) * 5, Math.min(pageNumber * 5, books.length)));
+    const[currentBooks, setCurrentBooks] = useState(books.slice((pageNumber - 1) * 12, Math.min(pageNumber * 12, books.length)));
 
     useEffect(()=>{
-        setCurrentBooks(books.slice((pageNumber - 1) * 5, Math.min(pageNumber * 5, books.length)));
+        setCurrentBooks(books.slice((pageNumber - 1) * 12, Math.min(pageNumber * 12, books.length)));
     },[pageNumber, books])
 
     function handlePageClick(index){
@@ -58,7 +46,7 @@ function Books(){
                 <div className='books'>
                     {currentBooks.map((book,i)=>(
                         <div className='book' >
-                            <img src={book.cover} className='book-cover' onClick={()=>navigate(`/Books/${book._id}`)}></img>
+                            <img src={`http://localhost:3000/${book.cover}`} className='book-cover' onClick={()=>navigate(`/Books/${book._id}`)}></img>
                             <div className='book-name'>{`${book.title}` }</div>
                             <div className='book-author'>{`${book.author}`}</div>
                             <div className='book-price'>{`${book.price}`}</div>

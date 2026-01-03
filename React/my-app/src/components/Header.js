@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { CiUser, CiHeart, CiShoppingCart } from "react-icons/ci";
+import { CiUser, CiShoppingCart } from "react-icons/ci";
 import { useContext, useState } from 'react';
 import SearchBar from './searchBar';
 import { Link, useNavigate } from 'react-router-dom';
@@ -18,6 +18,12 @@ function Header(){
             const storedUserData = localStorage.getItem('userData');
             return storedUserData ? JSON.parse(storedUserData) : userDataInitialState;
         });
+
+    useEffect(()=>{
+        const storedUserData = localStorage.getItem('userData');
+        storedUserData ? setUserData(JSON.parse(storedUserData)) : setUserData(userDataInitialState);
+    }, [localStorage.getItem('userData')])
+
     const navigate = useNavigate();
 
     const onClickLogout = () => {
@@ -30,7 +36,7 @@ function Header(){
           <div className='icons'> 
             <div className="page_header_costumer">
                 {
-                    !!JSON.parse(localStorage.getItem('userData')).user?
+                    !!userData.user?
                     <div>
                         <CiLogout size={23} className='icon' onClick={()=>onClickLogout()}/>
                     </div> : 
@@ -42,7 +48,7 @@ function Header(){
           
             <div className='page_header_minicart'>
                 {
-                    !!JSON.parse(localStorage.getItem('userData')).user?
+                    !!userData.user?
                     <Link to={'/cart'} >
                         <CiShoppingCart className='icon' size={23}/>
                     </Link> :
@@ -54,7 +60,7 @@ function Header(){
             </div>
             <div className='page_header_settings'>
             {
-                !!JSON.parse(localStorage.getItem('userData')).user?
+                !!userData.user?
                 <div>
                     <Link to={'/Settings'}>
                         <IoIosSettings size={23} className='icon'/>

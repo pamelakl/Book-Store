@@ -11,10 +11,8 @@ import AdminLogin from './components/AdminLogin';
 import AdminSettings from './components/AdminSettings';
 import NotFound from './components/NotFound';
 import React from 'react';
-import { useState } from 'react';
 import { BrowserRouter, Routes, Route} from 'react-router-dom';
 import LoginContextProvider from './context/LoginContext';
-import BooksContextProvider from './context/BooksContext';
 
 
 
@@ -25,7 +23,6 @@ function App() {
     <div className='app'>
       <BrowserRouter>
         <LoginContextProvider>
-          <BooksContextProvider>
             <Layout>
               <Routes>
                 <Route path='/' element={<Main></Main>}></Route>
@@ -39,7 +36,6 @@ function App() {
                 <Route path="*" element={<NotFound />} /> 
               </Routes>
             </Layout>
-          </BooksContextProvider>
         </LoginContextProvider>
       </BrowserRouter>
     </div>

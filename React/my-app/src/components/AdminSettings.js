@@ -1,5 +1,5 @@
 import '../style/books.css';
-import React, { useContext, useEffect } from 'react';
+import React, {  useEffect } from 'react';
 import { useState } from 'react';
 import '../style/books.css'
 import { useNavigate } from 'react-router-dom';
@@ -7,6 +7,8 @@ import ChangeBookSettings from './changeBookSettings';
 import { CiCircleRemove } from "react-icons/ci";
 import AddNewBook from './AddNewBook';
 import { userDataInitialState } from '../reducers/loginReducer';
+import { FaRegEdit } from "react-icons/fa";
+import { IoIosAddCircleOutline } from "react-icons/io";
 
 
 function AdminSettings(){
@@ -17,22 +19,35 @@ function AdminSettings(){
 
     const navigate = useNavigate()
 
+    const [selectedBookId, setSelectedBookId] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [editingBook, setEditingBook] = useState(null);
+    const [books, setBooks] = useState([]);
+    const[pageNumber, setPageNumber] = useState(1);
+    const[currentBooks, setCurrentBooks] = useState(books.slice((pageNumber - 1) * 12, Math.min(pageNumber * 12, books.length)));
+
+    const handleEditClick = (book) => {
+        setSelectedBookId(book._id);
+        setIsModalOpen(true);
+        setEditingBook(book);
+    };
+
+    const handleAddClick = () => {
+        setIsModalOpen(true);
+    }
+
+    const handleClose = () => {
+        setSelectedBookId(null);
+        setIsModalOpen(false);
+        setEditingBook(null);
+    };
+
     if(!userData?.user?.admin){
         navigate('/')
     }
 
-    const [books, setBooks] = useState([]);
-
     useEffect(() => {
         refetchBooks();
-        // fetch("http://localhost:3000/books")
-        //   .then(response => response.json())
-        //   .then(data => 
-        //     {   
-                
-        //         setBooks(data.data.books);
-        //     })
-        //   .catch(error => console.error("Error fetching books:", error));
       }, []);
 
     async function refetchBooks(){
@@ -46,14 +61,10 @@ function AdminSettings(){
         }
     }
 
-    const[pageNumber, setPageNumber] = useState(1);
-
-    const totalPages = books.length%3 === 0 ? books.length/3 : (books.length/3)+1
-
-    const[currentBooks, setCurrentBooks] = useState(books.slice((pageNumber - 1) * 3, Math.min(pageNumber * 3, books.length)));
-
+    const totalPages = books.length%12 === 0 ? books.length/12 : (books.length/12)+1
+    
     useEffect(()=>{
-        setCurrentBooks(books.slice((pageNumber - 1) * 3, Math.min(pageNumber * 3, books.length)));
+        setCurrentBooks(books.slice((pageNumber - 1) * 12, Math.min(pageNumber * 12, books.length)));
     },[pageNumber, books])
 
     function handlePageClick(index){
@@ -79,25 +90,32 @@ function AdminSettings(){
 
     return(
             <div className='book-section'>
+                <button onClick={() => handleAddClick()} className='new-book-button' title="Add Book"> 
+                    <IoIosAddCircleOutline size={30} />
+                    <span>Add New Book</span>  
+                </button>
                 <div>
                     <div className='books'>
                     {currentBooks.map((book,i)=>(
-                        <div className='book'>
-                            <img key={`img-${i}`} src={book.cover} className='book-cover'></img>
-                            <div key={`book-name-${i}`} className='liked-book-name'>{`${book.title}` }</div>
-                            <div key={`book-author-${i}`} className='liked-book-author'>{`${book.author}`}</div>
-                            <div key={`book-price-${i}`} className='liked-book-price'>{`${book.price}`}</div>
-                            <div key={`remove-book-${i}`} className='remove-liked-book' onClick={() => removeBook(book)}>
-                                <CiCircleRemove size={25}/>
-                            </div>
-                            <div className='change-book-settings'>
-                                <ChangeBookSettings bookID={book._id} title={book.title} author={book.author} 
-                                    price={book.price} cover={book.cover} onBookUpdate={refetchBooks}></ChangeBookSettings>
+                        <div>
+                            <div className='book'>
+                                <img key={`img-${i}`} src={`http://localhost:3000/${book.cover}`} className='book-cover'></img>
+                                <div key={`book-name-${i}`} className='liked-book-name'>{`${book.title}` }</div>
+                                <div key={`book-author-${i}`} className='liked-book-author'>{`${book.author}`}</div>
+                                <div key={`book-price-${i}`} className='liked-book-price'>{`${book.price}`}</div>
+                                <div className='admin-settings'> 
+                                    <button onClick={() => removeBook(book)} className='settings-button' title="Remove Book"> 
+                                        <CiCircleRemove size={20}  className='remove-book'></CiCircleRemove>
+                                    </button>
+                                    <button onClick={() => handleEditClick(book)}  className='settings-button' title="Edit Book"> 
+                                        <FaRegEdit size={20} className='change-book-settings'/>
+                                    </button>
+                                 
+                                </div>
                             </div>
                         </div>
                     ))}
                     </div>
-                    
                     <div className='pageNumbers'>
                         {Array.from({ length: totalPages }, (_, index) => (
                             <button key={index + 1}  onClick={() => handlePageClick(index + 1)} className={`page-button ${pageNumber === index + 1 ? 'active' : ''}`}>
@@ -106,14 +124,20 @@ function AdminSettings(){
                         ))}
                     </div>
                 </div>
-                
-                <div>
-                    <AddNewBook onAdd={refetchBooks}></AddNewBook>
-                </div>
+                {isModalOpen && selectedBookId && (
+                            <ChangeBookSettings book={editingBook} onBookUpdate={() => {refetchBooks();}} handleClose={handleClose}/>
+                )}
+
+                {isModalOpen && !selectedBookId && (
+                    <div className="modal-overlay" onClick={handleClose}>
+                        <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                            <AddNewBook onAdd={refetchBooks}></AddNewBook>
+                            <button onClick={handleClose} className="close-modal-button">X</button>
+                        </div>
+                    </div>
+                )}      
 
             </div>
-      
-        
     )
 }
 

@@ -1,5 +1,3 @@
-import Axios from 'axios';
-
 export const subscribeToSite = async (email, password) => {
     try {
         const response = await fetch("http://localhost:3000/users/signup", {

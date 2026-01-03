@@ -14,8 +14,12 @@ const getBook = async (req, res, next) => {
 
 const addBook = async (req, res, next) => {
     try{
-        const { bookId, title, author, price, cover, description } = req.body;
-        const book = await apiService.addNewBook(bookId, title, author, price, cover, description);
+        const { title, author, price, description } = req.body;
+        if (!req.file) {
+            return res.status(400).json({ error: 'No cover image uploaded' });
+        }
+        const cover = 'uploads/' + req.file.filename;
+        const book = await apiService.addNewBook(title, author, price, cover, description);
         ok(res, {book}, 'Added book')
     } catch(err){
         next(err);
@@ -91,6 +95,17 @@ const deleteBookFromCart = async(req, res, next) => {
     }
 }
 
+const emptyCart = async(req, res, next) => {
+    try{
+        const userId = req.userId;
+
+        await apiService.emptyCart(userId);
+
+        ok(res, userId, "Emptied cart successfully");
+    } catch(error) {
+        next(error)
+    }
+ }
 module.exports = {
     getBook,
     getBooks,
@@ -100,4 +115,5 @@ module.exports = {
     addBookToCart,
     getBooksInCart,
     deleteBookFromCart,
+    emptyCart
 }

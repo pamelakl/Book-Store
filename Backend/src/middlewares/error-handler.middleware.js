@@ -1,7 +1,6 @@
-const { response } = require('../app');
-const {internalServerError} = require('../utils/response.utils')
 
-const errorHandler = (err, req, res, next) => {
+
+const errorHandler = (err, req, res) => {
     console.error("error was:" + err)
     console.error("stack trace:", err.stack);
     res.status(err.statusCode || 500).json({ error: err.message || "Internal Server Error"})

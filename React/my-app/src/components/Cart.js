@@ -1,9 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { LoginContext } from '../context/LoginContext';
-import { BooksContext } from '../context/BooksContext';
+import React, { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { CiCircleRemove } from "react-icons/ci";
-import { removeBookFromCartAction } from '../actions/booksActions';
 import '../style/books.css'
 import { userDataInitialState } from '../reducers/loginReducer';
 
@@ -13,7 +10,6 @@ function Cart(){
             const storedUserData = localStorage.getItem('userData');
             return storedUserData ? JSON.parse(storedUserData) : userDataInitialState;
         });
-    const {dispatchBooksData} = useContext(BooksContext);
     const [totalToPay, setTotalToPay] = useState(0);
 
     const [booksInCart, setBooksInCart] = useState([]);
@@ -68,6 +64,24 @@ function Cart(){
         }
     }
 
+    const emptyCart = async () => {
+        try{
+            const response = await fetch(`http://localhost:3000/books`, {
+                method: 'DELETE',
+                headers: {
+                    'token': userData.token,
+                    'Content-Type': 'application/json'
+                }
+                
+            })
+            fetchBooks();
+            alert("Thank you for your purchase!")
+        }
+        catch(error){
+            console.error('Error:', error);
+        }
+    }
+
 
     return (
         <div className='book-section'>
@@ -75,7 +89,7 @@ function Cart(){
                 {booksInCart
                 .map((book,i)=>(
                     <div className='book'>
-                        <img key={`img-${i}`} src={book.cover} className='book-cover'></img>
+                        <img key={`img-${i}`} src={`http://localhost:3000/${book.cover}`} className='book-cover'></img>
                         <div key={`book-name-${i}`} className='liked-book-name'>{`${book.title}` }</div>
                         <div key={`book-author-${i}`} className='liked-book-author'>{`${book.author}`}</div>
                         <div key={`book-price-${i}`} className='liked-book-price'>{`${book.price}`}</div>
@@ -85,10 +99,20 @@ function Cart(){
                     </div>
                 ))}
             </div>
-            <div className='total'>
-                <h3>Total To Pay</h3>
-                <div>{totalToPay}</div>
-            </div>
+            {booksInCart.length > 0 ? (
+                <>
+                    <div className='total'>
+                        <h3>Total To Pay</h3>
+                        <div>{totalToPay}</div>
+                    </div>
+                    <div className='checkout-section'>
+                        <button className='checkout-button' onClick={() => emptyCart()}>Continue to checkout</button>
+                    </div>
+                </>
+            ) : (
+                <h3 className='total'>The cart is empty</h3>
+            )}
+            
             
         </div>
     )

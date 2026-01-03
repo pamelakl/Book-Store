@@ -5,6 +5,7 @@ const Book = require('../models/book.model')
 const mongoose = require("mongoose");
 const jwt = require('jsonwebtoken');
 const config = require('config');
+const booksService = require('../services/books.service');
 
 const getUsers = () => {
     return users;
@@ -13,11 +14,6 @@ const getUsers = () => {
 const getUser = async (id) => {
     const user = await User.findById(id);
     return user;
-}
-
-const getBooks = async () => {
-    const books = await Book.find();
-    return books;
 }
 
 const getBooksInCart = async (userId) => {
@@ -49,35 +45,11 @@ const changeAccountInfo = async (userId, newData) => {
     return {user: retUser, token};
 }
 
-const changeBookInfo = async (bookId, newBookInfo) => {
-    const updatedBook = await Book.findByIdAndUpdate(
-        bookId,
-        { $set: newBookInfo },
-        { new: true, runValidators: true }
-    );
 
-    if (!updatedBook) {
-        const error = new Error("Book not found");
-        error.status = 404;
-        throw error;
-    }
-
-    return {updatedBook};
-}
-
-const addBookToUser = async (userId, bookData) => {
-    const user = await getUser(userId);
-    if (!user) {
-        throw new NotExistError("user not found");
-    }
-    const book = await getBook(bookData.bookId);
-    user.books = user.books ? [...user.books, book._id] : [book._id];
-    await user.save();
-}
 
 const deleteBookFromCart = async (userId, bookId) => {
     const user = await getUser(userId);
-    const book = await getBook(bookId);
+    const book = await booksService.getBook(bookId);
     if(!user || !book){
         throw new NotExistError("info not found");
     }
@@ -85,34 +57,6 @@ const deleteBookFromCart = async (userId, bookId) => {
     user.books = user.books.filter(b => !b.equals(bookId));
 
     await user.save();
-
-}
-
-const getBook = async (id) => {
-    const book = await Book.findById(id);
-    return book;
-}
-
-const addNewBook = async (title, author, price, cover, description) => {
-    const newBook = new Book({
-        title,
-        author,
-        price,
-        cover,
-        description
-    });
-
-    await newBook.save();
-    console.log("Succesfully added new book to cart", newBook )
-    return newBook;
-}
-
-const deleteBook = async (bookId) => {
-    await Book.findByIdAndDelete(bookId);
-    await User.updateMany(
-        { books: bookId },  
-        { $pull: { books: bookId } }  
-    );
 }
 
 const emptyCart = async (userId) => {
@@ -166,16 +110,10 @@ module.exports = {
     getUsers, 
     getUser,
     createUser,
-    getBooks,
-    getBook,
     login,
     changeAccountInfo,
     getBooksInCart,
-    addBookToUser,
     deleteBookFromCart,
-    addNewBook,
-    deleteBook,
-    changeBookInfo,
     deleteAccount,
     emptyCart
 }

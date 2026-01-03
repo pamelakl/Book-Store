@@ -17,10 +17,6 @@ const notFound = (res, message) => {
     res.status(404).send(new ErrorResponse(false, 404, 'Not found', message));
 }
 
-const limit = (res, message) => {
-    res.status(404).send(new ErrorResponse(false, 404, 'Not found', message));
-}
-
 const internalServerError = (res, message) => {
     res.status(500).send(new ErrorResponse(false, 500, 'Internal Server Error', message));
 }

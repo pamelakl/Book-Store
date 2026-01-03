@@ -1,11 +1,9 @@
 import '../style/searchBar.css';
 import '../style/all.css';
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import AddToCart from './addToCart';
-import { BooksContext } from '../context/BooksContext';
-import { useNavigate } from 'react-router-dom';
 
 const SearchBooks = (props) => {
     const {search} = useParams()
@@ -18,7 +16,6 @@ const SearchBooks = (props) => {
                 const response = await fetch("http://localhost:3000/books");
                 const data = await response.json();
                 setBooks((data.data.books).filter((book) => (book.title.toLowerCase()).includes(search?.toLowerCase())));
-                
             }
             catch(error){
                 console.error("Error fetching books:", error);
@@ -47,13 +44,13 @@ const SearchBooks = (props) => {
             <div className='books'>
                 {currentBooks.map((book,i)=>(
                     <div className='book'>
-                        <img src={book.cover} className='book-cover'></img>
+                        <img src={`http://localhost:3000/${book.cover}`} className='book-cover'></img>
+                        <div className='book-name'>{`${book.title}` }</div>
+                        <div className='book-author'>{`${book.author}`}</div>
                         <div className='add-book-to-cart'>
                             <AddToCart bookID={book._id} title={book.title} author={book.author} 
                                 price={book.price} cover={book.cover}></AddToCart>
                         </div>
-                        <div className='book-name'>{`${book.title}` }</div>
-                        <div className='book-author'>{`${book.author}`}</div>
                     </div>
             ))}
             </div>

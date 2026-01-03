@@ -1,5 +1,4 @@
-import React, { createContext, useReducer, useState } from 'react';
-import { useEffect } from 'react';
+import React, { createContext, useReducer } from 'react';
 import loginReducer, { userDataInitialState } from '../reducers/loginReducer';
 
 export const LoginContext = createContext();
@@ -10,11 +9,6 @@ const LoginContextProvider = (props) => {
 
     const [userData, dispatchUserData] = useReducer(loginReducer, storedUserData);
     
-    // useEffect(() => {
-    //     if (!localStorage.getItem('userData')) {
-    //         localStorage.setItem('userData', JSON.stringify(userDataInitialState));
-    //     }
-    // }, []);
 
     return (
         <LoginContext.Provider value={{userData, dispatchUserData}}>
